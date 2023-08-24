@@ -27,7 +27,7 @@ type NotInRule = Parameters<(typeof rules)['notIn']>[0]
 type UrlRule = Parameters<(typeof rules)['url']>[0]
 type EqualToRule = Parameters<(typeof rules)['equalTo']>[0]
 
-interface ComonAttributeValidation {
+export interface CommonAttributeValidation {
   optional?: boolean
   nullable?: boolean
   unique?: UniqueRule
@@ -39,7 +39,7 @@ interface ComonAttributeValidation {
   equalTo?: EqualToRule
 }
 
-export interface StringAttributeValidation extends ComonAttributeValidation {
+export interface StringAttributeValidation extends CommonAttributeValidation {
   type: 'string'
   alpha?: AplhaRule
   alphaNum?: AplhaNumRule
@@ -57,20 +57,20 @@ export interface StringAttributeValidation extends ComonAttributeValidation {
   trim?: boolean
 }
 
-export interface ArrayAttributeValidation extends ComonAttributeValidation {
+export interface ArrayAttributeValidation extends CommonAttributeValidation {
   type: 'array'
   minLength?: MinLengthRule
   maxLength?: MaxLengthRule
   distinct?: DistinctRule
 }
 
-export interface NumberAttributeValidation extends ComonAttributeValidation {
+export interface NumberAttributeValidation extends CommonAttributeValidation {
   type: 'number'
   unsigned?: boolean
   range?: [number, number]
 }
 
-export interface DateAttributeValidation extends ComonAttributeValidation {
+export interface DateAttributeValidation extends CommonAttributeValidation {
   type: 'date'
   after?: AfterRule
   before?: BeforeRule

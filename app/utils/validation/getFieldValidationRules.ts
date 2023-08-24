@@ -1,5 +1,7 @@
 import {
+  CommonAttributeValidation,
   MetaAttributeValidation,
+  NumberAttributeValidation,
   StringAttributeValidation,
 } from 'App/utils/validation/modelAttributesValidation'
 
@@ -18,12 +20,36 @@ const getRulesSuffixValidation = (validation: MetaAttributeValidation) => {
 }
 
 const prepareRuleParam = (obj: any) => {
+  if (typeof obj === 'string') return `'${obj}'`
+
   const stringified = JSON.stringify(obj)
   const unescaped = stringified.replace(/\\/g, '')
 
   if (unescaped === '{}') return ''
 
   return unescaped
+}
+
+const commonValidationRules = (validation: CommonAttributeValidation) => {
+  const rules: string[] = []
+
+  if (validation.unique) rules.push(`rules.unique(${prepareRuleParam(validation.unique)})`)
+  if (validation.exists) rules.push(`rules.exists(${prepareRuleParam(validation.exists)})`)
+  if (validation.requiredIfExists) {
+    rules.push(`rules.requiredIfExists(${prepareRuleParam(validation.requiredIfExists)})`)
+  }
+  if (validation.requiredIfExistsAll) {
+    rules.push(`rules.requiredIfExistsAll(${prepareRuleParam(validation.requiredIfExistsAll)})`)
+  }
+  if (validation.requiredIfExistsAny) {
+    rules.push(`rules.requiredIfExistsAny(${prepareRuleParam(validation.requiredIfExistsAny)})`)
+  }
+  if (validation.requiredWhen) {
+    rules.push(`rules.requiredWhen(${prepareRuleParam(validation.requiredWhen)})`)
+  }
+  if (validation.equalTo) rules.push(`rules.equalTo(${prepareRuleParam(validation.equalTo)})`)
+
+  return rules
 }
 
 const stringValidationRules = (validation: StringAttributeValidation) => {
@@ -47,11 +73,24 @@ const stringValidationRules = (validation: StringAttributeValidation) => {
   return rules
 }
 
-const getValidationRules = (validation: MetaAttributeValidation) => {
+const numberValidationRules = (validation: NumberAttributeValidation) => {
   const rules: string[] = []
+
+  if (validation.unsigned) rules.push('rules.unsigned()')
+  if (validation.range) rules.push(`rules.range(${validation.range[0]}, ${validation.range[1]})`)
+
+  return rules
+}
+
+const getValidationRules = (validation: MetaAttributeValidation) => {
+  const rules: string[] = commonValidationRules(validation)
 
   if (validation.type === 'string') {
     rules.push(...stringValidationRules(validation))
+  }
+
+  if (validation.type === 'number') {
+    rules.push(...numberValidationRules(validation))
   }
 
   return rules.join(', ')
