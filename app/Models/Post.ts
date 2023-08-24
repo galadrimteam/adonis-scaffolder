@@ -1,24 +1,25 @@
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
+import { createMetaValidation } from 'App/utils/modelAttributesValidation'
 import { DateTime } from 'luxon'
-
-import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column({
-    meta: { type: 'string', validation: schema.string([rules.minLength(3), rules.maxLength(20)]) },
-  })
+  @column(createMetaValidation({ type: 'string', minLength: 3, maxLength: 20 }))
   public title: string
 
-  @column({
-    meta: { type: 'string', validation: schema.string([rules.minLength(3), rules.maxLength(200)]) },
-  })
+  @column(createMetaValidation({ type: 'string', minLength: 3, maxLength: 200 }))
   public body: string
 
-  @column()
+  @column(
+    createMetaValidation({
+      type: 'number',
+      required: true,
+      exists: { table: 'users', column: 'id' },
+    })
+  )
   public userId: number
 
   @belongsTo(() => User)
