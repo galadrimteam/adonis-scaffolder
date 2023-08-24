@@ -43,6 +43,7 @@ export default class Api extends BaseCommand {
 
     await this.createCrudRoute('list')
     await this.createCrudRoute('destroy')
+    await this.createCrudRoute('read')
   }
 
   private async getBelongsToRelations(LoadedModel: typeof BaseModel) {

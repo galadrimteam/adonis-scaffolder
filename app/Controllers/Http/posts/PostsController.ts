@@ -1,7 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { destroyPost } from 'App/Controllers/Http/posts/destroyPost'
 import { postsList } from 'App/Controllers/Http/posts/postsList'
-// import { showPost } from 'App/Controllers/Http/posts/showPost'
+import { showPost } from 'App/Controllers/Http/posts/showPost'
 // import { storePost } from 'App/Controllers/Http/posts/storePost'
 // import { updatePost } from 'App/Controllers/Http/posts/updatePost'
 
@@ -14,9 +14,9 @@ export default class OrganizationsController {
   //   return storePost(ctx)
   // }
 
-  // public async show(ctx: HttpContextContract) {
-  //   return showPost(ctx)
-  // }
+  public async show(ctx: HttpContextContract) {
+    return showPost(ctx)
+  }
 
   // public async update(ctx: HttpContextContract) {
   //   return updatePost(ctx)
