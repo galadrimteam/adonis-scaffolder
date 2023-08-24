@@ -3,6 +3,7 @@ import { string } from '@ioc:Adonis/Core/Helpers'
 import View from '@ioc:Adonis/Core/View'
 import { BaseModel, RelationshipsContract } from '@ioc:Adonis/Lucid/Orm'
 import { filterUndefinedOrNullValues } from 'App/utils/array'
+import { getFieldValidationRules } from 'App/utils/validation/getFieldValidationRules'
 import { MetaAttributeValidation } from 'App/utils/validation/modelAttributesValidation'
 
 import fs from 'fs/promises'
@@ -37,11 +38,11 @@ export default class Api extends BaseCommand {
     const relativePath = `${ROOT_PATH}/app/Models/${this.modelName}`
     const LoadedModel = (await import(relativePath)).default
 
-    console.log(this.getFieldsToValidate(LoadedModel))
-
     await this.getBelongsToRelations(LoadedModel)
 
     await this.createController()
+
+    await this.createSchema(LoadedModel)
 
     await this.createCrudRoute('list')
     await this.createCrudRoute('destroy')
@@ -109,10 +110,6 @@ export default class Api extends BaseCommand {
     return folder
   }
 
-  private get schemaPath() {
-    return `${this.folderPath}/${this.modelPluralizedCamelCaseName}Schema.ts`
-  }
-
   private async createController() {
     const fileName = `${string.pluralize(this.modelName)}Controller.ts`
     const filePath = `${this.folderPath}/${fileName}`
@@ -134,6 +131,26 @@ export default class Api extends BaseCommand {
       model: this.modelName,
       modelCamelCaseName: this.modelCamelCaseName,
       modelPluralizedCamelCaseName: this.modelPluralizedCamelCaseName,
+    })
+
+    await fs.writeFile(filePath, text, { encoding: 'utf-8', mode: FILE_RIGHTS })
+
+    this.logger.info(`Creating file: ${filePath}`)
+  }
+
+  private async createSchema(LoadedModel: typeof BaseModel) {
+    const fileName = `${this.modelCamelCaseName}Schema`
+    const filePath = `${this.folderPath}/${fileName}.ts`
+
+    const fieldsToValidate = this.getFieldsToValidate(LoadedModel)
+
+    let fields = fieldsToValidate.map((field) => getFieldValidationRules(field)).join(',\n  ')
+
+    if (fieldsToValidate.length > 0) fields += ','
+
+    const text = await View.render(`${VIEWS_PATH}/schema`, {
+      fileName,
+      fields,
     })
 
     await fs.writeFile(filePath, text, { encoding: 'utf-8', mode: FILE_RIGHTS })

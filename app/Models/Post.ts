@@ -10,13 +10,18 @@ export default class Post extends BaseModel {
   @column(createMetaValidation({ type: 'string', minLength: 3, maxLength: 20 }))
   public title: string
 
-  @column(createMetaValidation({ type: 'string', minLength: 3, maxLength: 200 }))
+  @column(
+    createMetaValidation({
+      type: 'string',
+      minLength: 3,
+      maxLength: 200,
+    })
+  )
   public body: string
 
   @column(
     createMetaValidation({
       type: 'number',
-      required: true,
       exists: { table: 'users', column: 'id' },
     })
   )

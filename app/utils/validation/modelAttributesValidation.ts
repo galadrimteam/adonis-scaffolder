@@ -28,7 +28,7 @@ type UrlRule = Parameters<(typeof rules)['url']>[0]
 type EqualToRule = Parameters<(typeof rules)['equalTo']>[0]
 
 interface ComonAttributeValidation {
-  required?: boolean
+  optional?: boolean
   nullable?: boolean
   unique?: UniqueRule
   exists?: ExistsRule
