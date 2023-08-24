@@ -10,6 +10,10 @@ const VIEWS_PATH = `scaffolder/api`
 // .rw-r--r--
 const FILE_RIGHTS = 0o644
 
+const CRUD_NAMES = ['create', 'read', 'update', 'destroy', 'list'] as const
+
+type CrudNames = (typeof CRUD_NAMES)[number]
+
 export default class Api extends BaseCommand {
   public static commandName = 'make:api'
 
@@ -37,7 +41,8 @@ export default class Api extends BaseCommand {
 
     await this.createController()
 
-    await this.createListRoute()
+    await this.createCrudRoute('list')
+    await this.createCrudRoute('destroy')
   }
 
   private async getBelongsToRelations(LoadedModel: typeof BaseModel) {
@@ -95,13 +100,14 @@ export default class Api extends BaseCommand {
     this.logger.info(`Creating file: ${filePath}`)
   }
 
-  private async createListRoute() {
-    const fileName = this.crudNames.list
+  private async createCrudRoute(crudName: CrudNames) {
+    const fileName = this.crudNames[crudName]
     const filePath = `${this.folderPath}/${fileName}.ts`
 
-    const text = await View.render(`${VIEWS_PATH}/list`, {
+    const text = await View.render(`${VIEWS_PATH}/${crudName}`, {
       fileName,
       model: this.modelName,
+      modelCamelCaseName: this.modelCamelCaseName,
       modelPluralizedCamelCaseName: this.modelPluralizedCamelCaseName,
     })
 
