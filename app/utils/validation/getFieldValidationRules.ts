@@ -21,38 +21,31 @@ const prepareRuleParam = (obj: any) => {
   const stringified = JSON.stringify(obj)
   const unescaped = stringified.replace(/\\/g, '')
 
+  if (unescaped === '{}') return ''
+
   return unescaped
 }
 
 const stringValidationRules = (validation: StringAttributeValidation) => {
   const rules: string[] = []
 
-  if (validation.trim) rules.push('rules.trim()')
   if (validation.minLength) rules.push(`rules.minLength(${validation.minLength})`)
   if (validation.maxLength) rules.push(`rules.maxLength(${validation.maxLength})`)
   if (validation.alpha) rules.push(`rules.alpha(${prepareRuleParam(validation.alpha)})`)
   if (validation.alphaNum) rules.push(`rules.alphaNum(${prepareRuleParam(validation.alphaNum)})`)
   if (validation.confirmed) rules.push(`rules.confirmed('${validation.confirmed}')`)
+  if (validation.email) rules.push(`rules.email(${prepareRuleParam(validation.email)})`)
+  if (validation.ip) rules.push(`rules.ip(${prepareRuleParam(validation.ip)})`)
+  if (validation.regex) rules.push(`rules.regex(${validation.regex.toString()})`)
+  if (validation.uuid) rules.push(`rules.uuid(${prepareRuleParam(validation.uuid)})`)
+  if (validation.mobile) rules.push(`rules.mobile(${prepareRuleParam(validation.mobile)})`)
+  if (validation.notIn) rules.push(`rules.notIn(${prepareRuleParam(validation.notIn)})`)
+  if (validation.url) rules.push(`rules.url(${prepareRuleParam(validation.url)})`)
+  if (validation.escape) rules.push('rules.escape()')
+  if (validation.trim) rules.push('rules.trim()')
 
   return rules
 }
-
-/*
-
-  minLength?: MinLengthRule
-  maxLength?: MaxLengthRule
-  confirmed?: ConfirmedRule
-  email?: EmailRule
-  ip?: IpRule
-  regex?: RegexRule
-  uuid?: UuidRule
-  mobile?: MobileRule
-  notIn?: NotInRule
-  url?: UrlRule
-  escape?: boolean
-  trim?: boolean
-
-*/
 
 const getValidationRules = (validation: MetaAttributeValidation) => {
   const rules: string[] = []
