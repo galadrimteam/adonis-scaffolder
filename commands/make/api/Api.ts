@@ -31,14 +31,13 @@ export default class Api extends BaseCommand {
     const relativePath = `${ROOT_PATH}/app/Models/${this.modelName}`
     const LoadedModel = (await import(relativePath)).default
 
-    this.logger.info('columns definitions')
     // console.log(LoadedModel.$columnsDefinitions)
 
     await this.getBelongsToRelations(LoadedModel)
 
     await this.createController()
 
-    this.logger.info('TODO create files')
+    await this.createListRoute()
   }
 
   private async getBelongsToRelations(LoadedModel: typeof BaseModel) {
@@ -91,6 +90,21 @@ export default class Api extends BaseCommand {
     const text = await View.render(`${VIEWS_PATH}/controller`, { crudNames: this.crudNames })
 
     await fs.mkdir(this.folderPath, { recursive: true })
+    await fs.writeFile(filePath, text, { encoding: 'utf-8', mode: FILE_RIGHTS })
+
+    this.logger.info(`Creating file: ${filePath}`)
+  }
+
+  private async createListRoute() {
+    const fileName = this.crudNames.list
+    const filePath = `${this.folderPath}/${fileName}.ts`
+
+    const text = await View.render(`${VIEWS_PATH}/list`, {
+      fileName,
+      model: this.modelName,
+      modelPluralizedCamelCaseName: this.modelPluralizedCamelCaseName,
+    })
+
     await fs.writeFile(filePath, text, { encoding: 'utf-8', mode: FILE_RIGHTS })
 
     this.logger.info(`Creating file: ${filePath}`)
