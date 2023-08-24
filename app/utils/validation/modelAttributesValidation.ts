@@ -80,8 +80,11 @@ export interface DateAttributeValidation extends ComonAttributeValidation {
   beforeOrEqualToField?: BeforeOrEqualToFieldRule
 }
 
-export const createMetaValidation = (
-  validation: StringAttributeValidation | NumberAttributeValidation | ArrayAttributeValidation
-) => {
+export type MetaAttributeValidation =
+  | StringAttributeValidation
+  | NumberAttributeValidation
+  | ArrayAttributeValidation
+
+export const createMetaValidation = (validation: MetaAttributeValidation) => {
   return { meta: { validation } }
 }

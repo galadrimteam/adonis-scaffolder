@@ -2,6 +2,8 @@ import { BaseCommand, args } from '@adonisjs/core/build/standalone'
 import { string } from '@ioc:Adonis/Core/Helpers'
 import View from '@ioc:Adonis/Core/View'
 import { BaseModel, RelationshipsContract } from '@ioc:Adonis/Lucid/Orm'
+import { filterUndefinedOrNullValues } from 'App/utils/array'
+import { MetaAttributeValidation } from 'App/utils/validation/modelAttributesValidation'
 
 import fs from 'fs/promises'
 
@@ -35,7 +37,7 @@ export default class Api extends BaseCommand {
     const relativePath = `${ROOT_PATH}/app/Models/${this.modelName}`
     const LoadedModel = (await import(relativePath)).default
 
-    // console.log(LoadedModel.$columnsDefinitions)
+    console.log(this.getFieldsToValidate(LoadedModel))
 
     await this.getBelongsToRelations(LoadedModel)
 
@@ -44,6 +46,24 @@ export default class Api extends BaseCommand {
     await this.createCrudRoute('list')
     await this.createCrudRoute('destroy')
     await this.createCrudRoute('read')
+  }
+
+  private getFieldsToValidate(LoadedModel: typeof BaseModel) {
+    const results = Array.from(LoadedModel.$columnsDefinitions.entries()).map(
+      ([columnName, column]) => {
+        if (column.meta?.validation === undefined) {
+          return null
+        }
+
+        return {
+          name: columnName,
+          // column,
+          validation: column.meta.validation as MetaAttributeValidation,
+        }
+      }
+    )
+
+    return filterUndefinedOrNullValues(results)
   }
 
   private async getBelongsToRelations(LoadedModel: typeof BaseModel) {
@@ -87,6 +107,10 @@ export default class Api extends BaseCommand {
     const folder = `app/Controllers/Http/${this.modelPluralizedCamelCaseName}`
 
     return folder
+  }
+
+  private get schemaPath() {
+    return `${this.folderPath}/${this.modelPluralizedCamelCaseName}Schema.ts`
   }
 
   private async createController() {
