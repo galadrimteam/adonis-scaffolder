@@ -88,3 +88,8 @@ export type MetaAttributeValidation =
 export const createMetaValidation = (validation: MetaAttributeValidation) => {
   return { meta: { validation } }
 }
+
+export interface FieldToValidate {
+  name: string
+  validation: MetaAttributeValidation
+}

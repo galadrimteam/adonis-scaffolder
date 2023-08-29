@@ -4,7 +4,10 @@ import View from '@ioc:Adonis/Core/View'
 import { BaseModel, RelationshipsContract } from '@ioc:Adonis/Lucid/Orm'
 import { filterUndefinedOrNullValues } from 'App/utils/array'
 import { getFieldValidationRules } from 'App/utils/validation/getFieldValidationRules'
-import { MetaAttributeValidation } from 'App/utils/validation/modelAttributesValidation'
+import {
+  FieldToValidate,
+  MetaAttributeValidation,
+} from 'App/utils/validation/modelAttributesValidation'
 
 import fs from 'fs/promises'
 
@@ -42,11 +45,15 @@ export default class Api extends BaseCommand {
 
     await this.createController()
 
-    await this.createSchema(LoadedModel)
+    const fieldsToValidate = this.getFieldsToValidate(LoadedModel)
+
+    await this.createSchema(fieldsToValidate)
 
     await this.createCrudRoute('list')
     await this.createCrudRoute('destroy')
     await this.createCrudRoute('read')
+    await this.createCrudRoute('create', fieldsToValidate)
+    await this.createCrudRoute('update', fieldsToValidate)
   }
 
   private getFieldsToValidate(LoadedModel: typeof BaseModel) {
@@ -110,6 +117,10 @@ export default class Api extends BaseCommand {
     return folder
   }
 
+  private get schemaName() {
+    return `${this.modelCamelCaseName}Schema`
+  }
+
   private async createController() {
     const fileName = `${string.pluralize(this.modelName)}Controller.ts`
     const filePath = `${this.folderPath}/${fileName}`
@@ -122,15 +133,18 @@ export default class Api extends BaseCommand {
     this.logger.info(`Creating file: ${filePath}`)
   }
 
-  private async createCrudRoute(crudName: CrudNames) {
+  private async createCrudRoute(crudName: CrudNames, fieldsToValidate: FieldToValidate[] = []) {
     const fileName = this.crudNames[crudName]
     const filePath = `${this.folderPath}/${fileName}.ts`
+    const dtoFields = fieldsToValidate.map((field) => field.name).join(',\n    ')
 
     const text = await View.render(`${VIEWS_PATH}/${crudName}`, {
       fileName,
       model: this.modelName,
       modelCamelCaseName: this.modelCamelCaseName,
       modelPluralizedCamelCaseName: this.modelPluralizedCamelCaseName,
+      schemaName: this.schemaName,
+      dtoFields,
     })
 
     await fs.writeFile(filePath, text, { encoding: 'utf-8', mode: FILE_RIGHTS })
@@ -138,11 +152,9 @@ export default class Api extends BaseCommand {
     this.logger.info(`Creating file: ${filePath}`)
   }
 
-  private async createSchema(LoadedModel: typeof BaseModel) {
-    const fileName = `${this.modelCamelCaseName}Schema`
+  private async createSchema(fieldsToValidate: FieldToValidate[]) {
+    const fileName = this.schemaName
     const filePath = `${this.folderPath}/${fileName}.ts`
-
-    const fieldsToValidate = this.getFieldsToValidate(LoadedModel)
 
     let fields = fieldsToValidate.map((field) => getFieldValidationRules(field)).join(',\n  ')
 
