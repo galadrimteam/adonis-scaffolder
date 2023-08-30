@@ -71,11 +71,7 @@
     "@adonisjs/view": "^6.2.0"
   },
   "adonisjs": {
-    "instructionsMd": "./build/instructions.md",
-    "types": "@adocasts.com/adonisjs-honeypot",
-    "providers": [
-      "@adocasts.com/adonisjs-honeypot"
-    ],
+    "instructionsMd": "./instructions.md",
     "templates": {
       "commands/scaffolder": "commands/Api.ts",
       "resources/views/scaffolder": [
