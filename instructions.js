@@ -45,7 +45,7 @@ const createFile = (projectRoot, app, sink, where, from) => {
 /**
  * Instructions to be executed when setting up the package.
  */
-export default async function instructions(projectRoot, app, sink) {
+async function instructions(projectRoot, app, sink) {
   const flatConfig = FILES_CONFIG.flatMap((config) => {
     if (Array.isArray(config.from)) {
       return config.from.map((nestedConf) => ({ from: nestedConf, where: config.where }))
@@ -62,3 +62,5 @@ export default async function instructions(projectRoot, app, sink) {
   sink.logger.info('Then you can run "node ace make:api [model name]"')
   sink.logger.info('e.g. "node ace make:api Post"')
 }
+
+exports.default = instructions
