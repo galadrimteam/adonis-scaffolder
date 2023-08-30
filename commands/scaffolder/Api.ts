@@ -54,6 +54,20 @@ export default class Api extends BaseCommand {
     await this.createCrudRoute('read')
     await this.createCrudRoute('create', fieldsToValidate)
     await this.createCrudRoute('update', fieldsToValidate)
+
+    this.logger.success(`API scaffolded for ${this.modelName}`)
+    this.logger.info(`Don't forget to run your formatter`)
+    this.logger.info(`e.g. yarn format`)
+
+    this.logger.info(`Don't forget to link the controller in your routes.ts file`)
+    const controllerPath = `${this.modelPluralizedCamelCaseName}/${this.controllerFileName}`
+    this.logger.info(
+      `e.g. Route.resource('${this.modelPluralizedCamelCaseName}', '${controllerPath}')`
+    )
+  }
+
+  private get controllerFileName() {
+    return `${string.pluralize(this.modelName)}Controller`
   }
 
   private getFieldsToValidate(LoadedModel: typeof BaseModel) {
@@ -122,8 +136,7 @@ export default class Api extends BaseCommand {
   }
 
   private async createController() {
-    const fileName = `${string.pluralize(this.modelName)}Controller.ts`
-    const filePath = `${this.folderPath}/${fileName}`
+    const filePath = `${this.folderPath}/${this.controllerFileName}.ts`
 
     const text = await View.render(`${VIEWS_PATH}/controller`, { crudNames: this.crudNames })
 

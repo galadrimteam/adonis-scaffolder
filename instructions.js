@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 
 const FILES_CONFIG = [
   { where: 'commands/scaffolder', from: 'commands/Api.ts' },
@@ -28,18 +29,13 @@ const FILES_CONFIG = [
 const createFile = (projectRoot, app, sink, where, from) => {
   const fromPath = path.join(__dirname, 'build/templates', from)
   const fileName = from.split('/').pop()
-  const toPath = path.join(projectRoot, where, fileName)
 
-  return new Promise((resolve) => {
-    fs.copyFile(fromPath, toPath, (err) => {
-      if (err) {
-        sink.logger.action('create').failed(modelPath)
-      } else {
-        sink.logger.action('create').succeeded(modelPath)
-      }
-      resolve()
-    })
-  })
+  const toFolder = path.join(projectRoot, where)
+  const toCompletePath = path.join(projectRoot, where, fileName)
+
+  fs.mkdirSync(toFolder, { recursive: true })
+  fs.copyFileSync(fromPath, toCompletePath)
+  sink.logger.action('create').succeeded(toCompletePath)
 }
 
 /**
