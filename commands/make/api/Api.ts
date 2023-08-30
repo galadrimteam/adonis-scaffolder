@@ -12,7 +12,7 @@ import {
 import fs from 'fs/promises'
 
 const ROOT_PATH = '../../..'
-const VIEWS_PATH = `scaffolder/api`
+const VIEWS_PATH = `scaffolder`
 // .rw-r--r--
 const FILE_RIGHTS = 0o644
 
