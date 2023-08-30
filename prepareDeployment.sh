@@ -1,8 +1,8 @@
 rm -rf ./templates
 mkdir ./templates
 
-cp -r ./commands/scaffolder ./templates/commands
+cp -r ./commands/scaffolder ./build/templates/commands
 
-cp -r ./resources/views/scaffolder ./templates/views
+cp -r ./resources/views/scaffolder ./build/templates/views
 
-cp -r ./app/utils/scaffolderValidation ./templates/validation
+cp -r ./app/utils/scaffolderValidation ./build/templates/validation

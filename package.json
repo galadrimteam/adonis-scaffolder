@@ -1,6 +1,6 @@
 {
   "name": "@galadrim/adonis-scaffolder",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "scripts": {
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
@@ -69,10 +69,27 @@
     "@adonisjs/view": "^6.2.0"
   },
   "adonisjs": {
-    "instructions": "./instructions.js"
+    "templates": {
+      "commands/scaffolder": "commands/Api.ts",
+      "resources/views/scaffolder": [
+        "views/controller.edge",
+        "views/create.edge",
+        "views/destroy.edge",
+        "views/list.edge",
+        "views/read.edge",
+        "views/schema.edge",
+        "views/update.edge"
+      ],
+      "app/utils/scaffolderValidation": [
+        "validation/array.ts",
+        "validation/getFieldValidationRules.ts",
+        "validation/modelAttributesValidation.ts",
+        "validation/validateResourceId.ts"
+      ]
+    }
   },
   "files": [
-    "templates",
+    "build/templates",
     "instructions.js",
     "LICENSE",
     "README.md"
