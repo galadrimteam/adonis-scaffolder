@@ -143,7 +143,7 @@ export default class Api extends BaseCommand {
     await fs.mkdir(this.folderPath, { recursive: true })
     await fs.writeFile(filePath, text, { encoding: 'utf-8', mode: FILE_RIGHTS })
 
-    this.logger.info(`Creating file: ${filePath}`)
+    this.logger.action('create').succeeded(filePath)
   }
 
   private async createCrudRoute(crudName: CrudNames, fieldsToValidate: FieldToValidate[] = []) {
@@ -162,7 +162,7 @@ export default class Api extends BaseCommand {
 
     await fs.writeFile(filePath, text, { encoding: 'utf-8', mode: FILE_RIGHTS })
 
-    this.logger.info(`Creating file: ${filePath}`)
+    this.logger.action('create').succeeded(filePath)
   }
 
   private async createSchema(fieldsToValidate: FieldToValidate[]) {
@@ -180,6 +180,6 @@ export default class Api extends BaseCommand {
 
     await fs.writeFile(filePath, text, { encoding: 'utf-8', mode: FILE_RIGHTS })
 
-    this.logger.info(`Creating file: ${filePath}`)
+    this.logger.action('create').succeeded(filePath)
   }
 }

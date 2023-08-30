@@ -15,16 +15,16 @@ run `node ace configure @galadrim/adonis-scaffolder`
 
 example: `node ace make:api Post`
 
-output will be:
+this will create:
 
 ```
-[ info ]  Creating file: app/Controllers/Http/posts/PostsController.ts
-[ info ]  Creating file: app/Controllers/Http/posts/postSchema.ts
-[ info ]  Creating file: app/Controllers/Http/posts/postsList.ts
-[ info ]  Creating file: app/Controllers/Http/posts/destroyPost.ts
-[ info ]  Creating file: app/Controllers/Http/posts/showPost.ts
-[ info ]  Creating file: app/Controllers/Http/posts/storePost.ts
-[ info ]  Creating file: app/Controllers/Http/posts/updatePost.ts
+CREATE: app/Controllers/Http/posts/PostsController.ts
+CREATE: app/Controllers/Http/posts/postSchema.ts
+CREATE: app/Controllers/Http/posts/postsList.ts
+CREATE: app/Controllers/Http/posts/destroyPost.ts
+CREATE: app/Controllers/Http/posts/showPost.ts
+CREATE: app/Controllers/Http/posts/storePost.ts
+CREATE: app/Controllers/Http/posts/updatePost.ts
 ```
 
 I don't guarantee that my output will be nicely formatted
