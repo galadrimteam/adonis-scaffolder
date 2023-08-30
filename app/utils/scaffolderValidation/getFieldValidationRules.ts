@@ -3,7 +3,7 @@ import {
   MetaAttributeValidation,
   NumberAttributeValidation,
   StringAttributeValidation,
-} from 'App/utils/validation/modelAttributesValidation'
+} from 'App/utils/scaffolderValidation/modelAttributesValidation'
 
 interface FieldToValidate {
   name: string

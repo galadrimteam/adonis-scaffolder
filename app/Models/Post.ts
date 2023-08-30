@@ -1,6 +1,6 @@
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
-import { createMetaValidation } from 'App/utils/validation/modelAttributesValidation'
+import { createMetaValidation } from 'App/utils/scaffolderValidation/modelAttributesValidation'
 import { DateTime } from 'luxon'
 
 export default class Post extends BaseModel {

@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Post from 'App/Models/Post'
-import { validateResourceId } from 'App/utils/validation/validateResourceId'
+import { validateResourceId } from 'App/utils/scaffolderValidation/validateResourceId'
 import { postSchema } from './postSchema'
 
 export const updatePost = async ({ params, request }: HttpContextContract) => {

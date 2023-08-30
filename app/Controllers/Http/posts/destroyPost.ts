@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Post from 'App/Models/Post'
-import { validateResourceId } from 'App/utils/validation/validateResourceId'
+import { validateResourceId } from 'App/utils/scaffolderValidation/validateResourceId'
 
 export const destroyPost = async ({ params }: HttpContextContract) => {
   const { id } = await validateResourceId(params)

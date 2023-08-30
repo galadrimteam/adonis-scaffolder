@@ -2,16 +2,16 @@ import { BaseCommand, args } from '@adonisjs/core/build/standalone'
 import { string } from '@ioc:Adonis/Core/Helpers'
 import View from '@ioc:Adonis/Core/View'
 import { BaseModel, RelationshipsContract } from '@ioc:Adonis/Lucid/Orm'
-import { filterUndefinedOrNullValues } from 'App/utils/array'
-import { getFieldValidationRules } from 'App/utils/validation/getFieldValidationRules'
+import { filterUndefinedOrNullValues } from 'App/utils/scaffolderValidation/array'
+import { getFieldValidationRules } from 'App/utils/scaffolderValidation/getFieldValidationRules'
 import {
   FieldToValidate,
   MetaAttributeValidation,
-} from 'App/utils/validation/modelAttributesValidation'
+} from 'App/utils/scaffolderValidation/modelAttributesValidation'
 
 import fs from 'fs/promises'
 
-const ROOT_PATH = '../../..'
+const ROOT_PATH = '../..'
 const VIEWS_PATH = `scaffolder`
 // .rw-r--r--
 const FILE_RIGHTS = 0o644
