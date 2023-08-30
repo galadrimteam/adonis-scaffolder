@@ -54,8 +54,8 @@ async function instructions(projectRoot, app, sink) {
     createFile(projectRoot, app, sink, config.where, config.from)
   })
 
-  sink.logger.info('Scaffolder files created, please run "node ace generate:manifest"')
-  sink.logger.info('Then you can run "node ace make:api [model name]"')
+  sink.logger.success('Scaffolder files created')
+  sink.logger.info('you can now run "node ace make:api [model name]"')
   sink.logger.info('e.g. "node ace make:api Post"')
 }
 
