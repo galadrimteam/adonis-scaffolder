@@ -1,5 +1,5 @@
-rm -rf ./templates
-mkdir ./templates
+rm -rf ./build/templates
+mkdir -p ./build/templates
 
 cp -r ./commands/scaffolder ./build/templates/commands
 

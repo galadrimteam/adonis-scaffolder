@@ -26,7 +26,7 @@ const FILES_CONFIG = [
 ]
 
 const createFile = (projectRoot, app, sink, where, from) => {
-  const fromPath = path.join(__dirname, 'templates', from)
+  const fromPath = path.join(__dirname, 'build/templates', from)
   const fileName = from.split('/').pop()
   const toPath = path.join(projectRoot, where, fileName)
 
@@ -63,4 +63,4 @@ async function instructions(projectRoot, app, sink) {
   sink.logger.info('e.g. "node ace make:api Post"')
 }
 
-exports.default = instructions
+module.exports = instructions
