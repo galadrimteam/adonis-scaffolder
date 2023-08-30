@@ -1,5 +1,5 @@
 {
-  "name": "adonis-scaffolder",
+  "name": "@galadrim/adonis-scaffolder",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,8 @@
     "start": "node server.js",
     "test": "node ace test",
     "lint": "eslint . --ext=.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "deploy": "bash ./prepareDeployment.sh && np"
   },
   "eslintConfig": {
     "extends": [
@@ -39,6 +40,10 @@
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.5",
+    "@adonisjs/core": "^5.8.0",
+    "@adonisjs/lucid": "^18.4.0",
+    "@adonisjs/repl": "^3.1.0",
+    "@adonisjs/view": "^6.2.0",
     "@japa/preset-adonis": "^1.2.0",
     "@japa/runner": "^2.5.1",
     "@types/proxy-addr": "^2.0.0",
@@ -48,21 +53,61 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-adonis": "^2.1.1",
     "eslint-plugin-prettier": "^5.0.0",
+    "luxon": "^3.4.0",
+    "np": "^8.0.4",
     "pino-pretty": "^10.2.0",
     "prettier": "^3.0.1",
+    "proxy-addr": "^2.0.7",
+    "reflect-metadata": "^0.1.13",
+    "source-map-support": "^0.5.21",
+    "sqlite3": "^5.1.6",
     "typescript": "~4.6",
     "youch": "^3.2.3",
     "youch-terminal": "^2.2.2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@adonisjs/core": "^5.8.0",
     "@adonisjs/lucid": "^18.4.0",
-    "@adonisjs/repl": "^3.1.0",
-    "@adonisjs/view": "^6.2.0",
-    "luxon": "^3.4.0",
-    "proxy-addr": "^2.0.7",
-    "reflect-metadata": "^0.1.13",
-    "source-map-support": "^0.5.21",
-    "sqlite3": "^5.1.6"
-  }
+    "@adonisjs/view": "^6.2.0"
+  },
+  "adonisjs": {
+    "instructionsMd": "./build/instructions.md",
+    "types": "@adocasts.com/adonisjs-honeypot",
+    "providers": [
+      "@adocasts.com/adonisjs-honeypot"
+    ],
+    "templates": {
+      "commands/scaffolder": "commands/Api.ts",
+      "resources/views/scaffolder": [
+        "views/controller.edge",
+        "views/create.edge",
+        "views/destroy.edge",
+        "views/list.edge",
+        "views/read.edge",
+        "views/schema.edge",
+        "views/update.edge"
+      ],
+      "app/utils/scaffolderValidation": [
+        "validation/array.ts",
+        "validation/getFieldValidationRules.ts",
+        "validation/modelAttributesValidation.ts",
+        "validation/validateResourceId.ts"
+      ]
+    }
+  },
+  "files": [
+    "templates",
+    "instructions.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galadrimteam/adonis-scaffolder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/galadrimteam/adonis-scaffolder/issues"
+  },
+  "homepage": "https://github.com/galadrimteam/adonis-scaffolder#readme"
 }

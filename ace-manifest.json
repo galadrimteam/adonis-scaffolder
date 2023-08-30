@@ -5,7 +5,7 @@
         "loadApp": true,
         "stayAlive": false
       },
-      "commandPath": "./commands/make/api/Api",
+      "commandPath": "./commands/scaffolder/Api",
       "commandName": "make:api",
       "description": "Scaffold a new API controller for a Model",
       "args": [
