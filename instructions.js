@@ -16,6 +16,18 @@ const FILES_CONFIG = [
     ],
   },
   {
+    where: 'resources/views/scaffolder/auth',
+    from: [
+      'views/auth/AuthController.edge',
+      'views/auth/changePassword.edge',
+      'views/auth/login.edge',
+      'views/auth/logout.edge',
+      'views/auth/register.edge',
+      'views/auth/resetPassword.edge',
+      'views/auth/sendResetPasswordCode.edge',
+    ],
+  },
+  {
     where: 'app/utils/scaffolderValidation',
     from: [
       'validation/array.ts',
