@@ -38,6 +38,10 @@ export default class Api extends BaseCommand {
   }
 
   public async run() {
+    if (this.modelName === 'auth') {
+      return this.createAuthApi()
+    }
+
     const relativePath = `${ROOT_PATH}/app/Models/${this.modelName}`
     const LoadedModel = (await import(relativePath)).default
 
@@ -180,6 +184,26 @@ export default class Api extends BaseCommand {
 
     await fs.writeFile(filePath, text, { encoding: 'utf-8', mode: FILE_RIGHTS })
 
+    this.logger.action('create').succeeded(filePath)
+  }
+
+  private async createAuthApi() {
+    await fs.mkdir('app/Controllers/Http/auth', { recursive: true })
+
+    await this.createAuthApiFile('AuthController')
+    await this.createAuthApiFile('login')
+    await this.createAuthApiFile('logout')
+    await this.createAuthApiFile('register')
+    await this.createAuthApiFile('changePassword')
+    await this.createAuthApiFile('resetPassword')
+    await this.createAuthApiFile('sendResetPasswordCode')
+  }
+
+  private async createAuthApiFile(fileName: string) {
+    const filePath = `app/Controllers/Http/auth/${fileName}.ts`
+    const text = await View.render(`${VIEWS_PATH}/auth/${fileName}`)
+
+    await fs.writeFile(filePath, text, { encoding: 'utf-8', mode: FILE_RIGHTS })
     this.logger.action('create').succeeded(filePath)
   }
 }

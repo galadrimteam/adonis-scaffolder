@@ -38,3 +38,9 @@ I advise to run your formatter after generating files
 - once you have scaffolded your API routes for a model you can edit the files created
 - don't re run the command as it will overwrite your changes
 - this tool is intended to win you some time on boilerplate only, once the files generated, you are on your own 😉
+
+#### Bonus
+
+there is a secret command to generate auth api 🤫
+
+`node ace make:api auth`
