@@ -1,6 +1,6 @@
 {
   "name": "@galadrim/adonis-scaffolder",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "scripts": {
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
@@ -8,7 +8,7 @@
     "test": "node ace test",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write .",
-    "deploy": "bash ./prepareDeployment.sh && npm publish"
+    "deploy": "bash ./prepareDeployment.sh && npm publish --access public"
   },
   "eslintConfig": {
     "extends": [
@@ -62,11 +62,6 @@
     "typescript": "~4.6",
     "youch": "^3.2.3",
     "youch-terminal": "^2.2.2"
-  },
-  "peerDependencies": {
-    "@adonisjs/core": "^5.8.0",
-    "@adonisjs/lucid": "^18.4.0",
-    "@adonisjs/view": "^6.2.0"
   },
   "adonisjs": {
     "instructions": "./instructions.js"
