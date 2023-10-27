@@ -67,8 +67,8 @@ async function instructions(projectRoot, app, sink) {
   })
 
   sink.logger.success('Scaffolder files created')
-  sink.logger.info('you can now run "node ace make:api [model name]"')
-  sink.logger.info('e.g. "node ace make:api Post"')
+  sink.logger.info('you can now run "node ace scaffold [model name]"')
+  sink.logger.info('e.g. "node ace scaffold Post"')
 }
 
 module.exports = instructions
