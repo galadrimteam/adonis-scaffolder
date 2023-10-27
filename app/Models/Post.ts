@@ -1,30 +1,19 @@
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
-import { createMetaValidation } from 'App/utils/scaffolderValidation/modelAttributesValidation'
+import { scaffold } from 'App/Scaffolder/scaffolder'
 import { DateTime } from 'luxon'
 
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column(createMetaValidation({ type: 'string', minLength: 3, maxLength: 20 }))
+  @column(scaffold('string'))
   public title: string
 
-  @column(
-    createMetaValidation({
-      type: 'string',
-      minLength: 3,
-      maxLength: 200,
-    })
-  )
-  public body: string
+  @column(scaffold('string.nullable'))
+  public body: string | null
 
-  @column(
-    createMetaValidation({
-      type: 'number',
-      exists: { table: 'users', column: 'id' },
-    })
-  )
+  @column(scaffold('number'))
   public userId: number
 
   @belongsTo(() => User)

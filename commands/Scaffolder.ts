@@ -7,7 +7,7 @@ import { FieldToScaffold, getFieldValidationRules } from 'App/Scaffolder/scaffol
 
 import fs from 'fs/promises'
 
-const ROOT_PATH = '../..'
+const ROOT_PATH = '..'
 const VIEWS_PATH = `scaffolder`
 // .rw-r--r--
 const FILE_RIGHTS = 0o644
