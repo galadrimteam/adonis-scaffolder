@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 const FILES_CONFIG = [
-  { where: 'commands/scaffolder', from: 'commands/Scaffolder.ts' },
+  { where: 'commands/Scaffolder.ts', from: 'commands/Scaffolder.ts' },
   {
     where: 'resources/views/scaffolder',
     from: [

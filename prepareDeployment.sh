@@ -1,7 +1,7 @@
 rm -rf ./build/templates
 mkdir -p ./build/templates
 
-cp -r ./commands/scaffolder ./build/templates/commands
+cp ./commands/Scaffolder.ts ./build/templates/Scaffolder.ts
 
 cp -r ./resources/views/scaffolder ./build/templates/views
 
