@@ -16,7 +16,7 @@ const CRUD_NAMES = ['create', 'read', 'update', 'destroy', 'list'] as const
 
 type CrudNames = (typeof CRUD_NAMES)[number]
 
-export default class Api extends BaseCommand {
+export default class Scaffolder extends BaseCommand {
   public static commandName = 'scaffold'
 
   public static description = 'Scaffold a new API controller for a Model'

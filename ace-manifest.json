@@ -5,7 +5,7 @@
         "loadApp": true,
         "stayAlive": false
       },
-      "commandPath": "./commands/scaffolder/Api",
+      "commandPath": "./commands/Scaffolder",
       "commandName": "scaffold",
       "description": "Scaffold a new API controller for a Model",
       "args": [

@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 const FILES_CONFIG = [
-  { where: 'commands/scaffolder', from: 'commands/Api.ts' },
+  { where: 'commands/scaffolder', from: 'commands/Scaffolder.ts' },
   {
     where: 'resources/views/scaffolder',
     from: [
@@ -28,13 +28,8 @@ const FILES_CONFIG = [
     ],
   },
   {
-    where: 'app/utils/scaffolderValidation',
-    from: [
-      'validation/array.ts',
-      'validation/getFieldValidationRules.ts',
-      'validation/modelAttributesValidation.ts',
-      'validation/validateResourceId.ts',
-    ],
+    where: 'app/Scaffolder',
+    from: ['Scaffolder/array.ts', 'Scaffolder/scaffolder.ts', 'Scaffolder/validateResourceId.ts'],
   },
 ]
 
