@@ -34,9 +34,32 @@ Once you have installed this scaffolder, it becomes your code, do whatever you w
 
 ## Usage
 
-`node ace scaffold [model name]`
+Imagine you want to create a CRUDL API for your Post model
 
-example: `node ace scaffold Post`
+First, anotate some fields of the Post model
+
+```ts
+export default class Post extends BaseModel {
+  @column({ isPrimary: true })
+  public id: number
+
+  @column(scaffold('string'))
+  public name: string
+
+  @column(scaffold('number.nullable'))
+  public price: number | null
+
+  @column.dateTime({ autoCreate: true })
+  public createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  public updatedAt: DateTime
+}
+```
+
+Then, you can use the ace command line to scaffold the files:
+
+`node ace scaffold Post`
 
 this will create:
 

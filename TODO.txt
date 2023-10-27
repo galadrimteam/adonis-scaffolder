@@ -1,0 +1,1 @@
+- check if scaffolding was already done for the model, if so prompt the user to know if he wants to re-scaffold

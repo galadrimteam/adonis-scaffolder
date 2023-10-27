@@ -19,7 +19,10 @@ export type ScaffolderFieldTypeWithSuffix =
   | ScaffolderFieldType
 
 export const scaffold = (typeWithPotentialSuffix: ScaffolderFieldTypeWithSuffix) => {
-  const [type, suffix] = typeWithPotentialSuffix.split('.')
+  const [type, suffix] = typeWithPotentialSuffix.split('.') as [
+    ScaffolderFieldType,
+    ScaffolderFieldSuffix | undefined,
+  ]
 
   return { meta: { scaffolder: { type, suffix } } }
 }
